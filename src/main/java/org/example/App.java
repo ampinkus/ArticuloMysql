@@ -49,8 +49,9 @@ public class App {
         System.out.println();
 
         // busco el artículo con indice 101
-        System.out.println("El articulo con indice 102 es: ");
-        articuloDao.findById(102);
+        System.out.print("El articulo con indice 102 es: ");
+        System.out.println(articuloDao.findById(102));
+        System.out.println();
 
         // borro el artículo con indice 100
         articuloDao.delete(100);
@@ -64,6 +65,5 @@ public class App {
         } catch (SQLException e) {
             System.out.println("Cannot close database connection.");
         }
-
     }
 }

@@ -31,7 +31,8 @@ public class ArticuloDao implements Dao<Articulo>{ // tengo que especificar para
     }
 
     @Override
-    public void findById(Integer id) {
+    public String findById(Integer id) {
+        String row = "";
         var conn = Database.instance().getConnection();
         ResultSet rs;
 
@@ -42,13 +43,14 @@ public class ArticuloDao implements Dao<Articulo>{ // tengo que especificar para
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println(rs.getString("id") + ", " + rs.getString("nombre") +
+                row = (rs.getString("nombre") +
                         ", " + rs.getString("precio"));
             }
             System.out.println();
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+        return row;
     }
 
     @Override

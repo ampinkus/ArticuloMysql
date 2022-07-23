@@ -26,7 +26,7 @@ public interface Dao<T> {
     void save(T entidad) throws SQLException;
 
     // find an article by id
-    void findById(Integer id);
+    String findById(Integer id);
 
     // update an article
     void update(T entidad);
