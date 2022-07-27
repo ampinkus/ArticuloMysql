@@ -14,9 +14,9 @@ public class ArticuloDao implements Dao<Articulo>{ // tengo que especificar para
         try {
             /*
             preparo la instruccion de MySQL para insertar datos en la tabla (indice,nombre,precio) usando campos variables (?,?,?)
-            stmt.setString(1,articulo.getNombre()); es el primer campo de (?,?) ya que el indice es 1
-            stmt.setString(2,articulo.getNombre()); es el primer campo de (?,?) ya que el nombre es 2
-            stmt.setString(3,articulo.getPrecio()); es el segundo campo de (?,?) ya que el precio es 3
+            stmt.setString(1,articulo.getNombre()); es el primer campo de (?,?,?) ya que el indice es 1
+            stmt.setString(2,articulo.getNombre()); es el primer campo de (?,?,?) ya que el nombre es 2
+            stmt.setString(3,articulo.getPrecio()); es el segundo campo de (?,?,?) ya que el precio es 3
             */
             var stmt = conn.prepareStatement("insert into articulo (id,nombre,precio) values (?,?,?)");
             stmt.setInt(1,articulo.getId());
@@ -31,8 +31,8 @@ public class ArticuloDao implements Dao<Articulo>{ // tengo que especificar para
     }
 
     @Override
-    public String findById(Integer id) {
-        String row = "";
+    public Articulo findById(Integer id) {
+        Articulo articulo = null;
         var conn = Database.instance().getConnection();
         ResultSet rs;
 
@@ -41,16 +41,15 @@ public class ArticuloDao implements Dao<Articulo>{ // tengo que especificar para
             stmt.setInt(1, id );
             // Execute SQL query
             rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                row = (rs.getString("nombre") +
-                        ", " + rs.getString("precio"));
-            }
-            System.out.println();
+            if(rs.next())
+                articulo = new Articulo(id, rs.getString("nombre"),rs.getString("precio")); // construyo un artículo para devolver
+            else
+                articulo = new Articulo(0,"",""); // construyo un artículo para devolver si no se encontró el mismo
         } catch (SQLException e) {
+            System.out.println("No existe el articulo con id: " + id);
             throw new DaoException(e);
         }
-        return row;
+        return articulo;
     }
 
     @Override

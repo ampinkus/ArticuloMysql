@@ -33,8 +33,8 @@ public class App {
         articulo[2] = new Articulo(102,"jarra","3000");
 
         // cargo la base de datos con los artículos
-        for (int i = 0; i < articulo.length; i++ ){
-            articuloDao.save(articulo[i]);
+        for (Articulo value : articulo) {
+            articuloDao.save(value);
         }
 
         //imprimo todos los artículos
@@ -49,8 +49,12 @@ public class App {
         System.out.println();
 
         // busco el artículo con indice 101
-        System.out.print("El articulo con indice 102 es: ");
-        System.out.println(articuloDao.findById(102));
+        int id = 201;
+        System.out.print("El articulo con id " + id + " es: ");
+        if (articuloDao.findById(id).getId() != 0)
+            System.out.println(articuloDao.findById(id).toString());
+        else
+            System.out.println("No existe el articulo con el id:" + id);
         System.out.println();
 
         // borro el artículo con indice 100
